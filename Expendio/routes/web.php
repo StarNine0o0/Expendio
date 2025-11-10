@@ -18,5 +18,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// AÑADE ESTA LÍNEA para el inventario:
-Route::get('/inventario', [InventarioController::class, 'index'])->name('inventario.index');
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+
+Route::get('/menu', function () {
+    return view('menu');
+});
+
+Route::get('/almacen', function () {
+    return view('almacen');
+});
