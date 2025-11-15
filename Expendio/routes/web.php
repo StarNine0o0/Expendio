@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\InventarioController; // <-- AÑADE ESTA LÍNEA
+use App\Http\Controllers\VistasController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -14,20 +14,11 @@ use App\Http\Controllers\InventarioController; // <-- AÑADE ESTA LÍNEA
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
+Route::get('/login', [VistasController::class, 'returnVistaLogin']);
+    
+Route::get('/menu', [VistasController::class, 'returnVistaMenu']);
+    
+Route::get('/almacen', [VistasController::class, 'returnVistaAlmacen']);
+   
 
-Route::get('/login', function () {
-    return view('login');
-});
-
-
-Route::get('/menu', function () {
-    return view('menu');
-});
-
-Route::get('/almacen', function () {
-    return view('almacen');
-});
