@@ -1,26 +1,34 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;//Rutas API
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\InventarioController;
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-
-Route::get('/test', function(Request $request) {
+// Test route
+Route::get('/test', function () {
     return response()->json([
         'message'=> 'successful request',
-        'mensaje'=> 'success',
-        'time'=> now(),
-        'server_time'=> date('Y-m-d H:i:s'),
-
-    ] );
+        'server_time'=> now(),
+    ]);
 });
 
-Route::get('/users',[UserController::class, 'index']); //obtener usuarios
-Route::post('/users',[UserController::class, 'store']); //crear usuario
+// Auth routes (públicas)
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/register', [UserController::class, 'store']);
+// CRUD USERS (solo con token)
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::get('/user', function () {
+        return auth()->user();
+    });
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/users',[UserController::class, 'index']); 
+    Route::post('/users',[UserController::class, 'store']); 
+
+    Route::apiResource('productos', InventarioController::class);
+});
